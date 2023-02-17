@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class PuzzzleActivity extends AppCompatActivity {
@@ -17,10 +18,36 @@ public class PuzzzleActivity extends AppCompatActivity {
     Button[] button=new Button[10];
     Button submit;
     TextView txtAns;
+    ImageView imageView,image,skip;
+    TextView levelno;
+    int level=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_puzzzle);
+        txtAns=findViewById(R.id.txtAns);
+        image=findViewById(R.id.img);
+        levelno=findViewById(R.id.levelno);
+        submit=findViewById(R.id.submit);
+        skip=findViewById(R.id.skip);
+        imageView=findViewById(R.id.erase);
+
+        if(getIntent().getExtras()!=null)
+        {
+            level=getIntent().getIntExtra("level",0);
+        }
+        for(int i=0;i<10;i++)
+        {
+            int id=getResources().getIdentifier("btn"+i,"id",getPackageName());
+            button[i]=findViewById(id);
+
+        }
+        image.setImageResource(img[level]);
+        levelno.setText("Level "+(level+1));
+
+
+
+
     }
 }
