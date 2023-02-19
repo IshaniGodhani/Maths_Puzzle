@@ -2,12 +2,14 @@ package com.example.mathspuzzle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class PuzzzleActivity extends AppCompatActivity {
+public class PuzzzleActivity extends AppCompatActivity implements View.OnClickListener {
     int[] img={R.drawable.p1,R.drawable.p2,R.drawable.p3,R.drawable.p4,R.drawable.p5,
             R.drawable.p6,R.drawable.p7,R.drawable.p8,R.drawable.p9,R.drawable.p10,
             R.drawable.p11,R.drawable.p12,R.drawable.p13,R.drawable.p14,R.drawable.p15,
@@ -18,6 +20,7 @@ public class PuzzzleActivity extends AppCompatActivity {
     Button[] button=new Button[10];
     Button submit;
     TextView txtAns;
+    String temp,t;
     ImageView imageView,image,skip;
     TextView levelno;
     int level=0;
@@ -45,9 +48,48 @@ public class PuzzzleActivity extends AppCompatActivity {
         }
         image.setImageResource(img[level]);
         levelno.setText("Level "+(level+1));
+        for (int i=0;i<button.length;i++)
+        {
+            button[i].setOnClickListener(this);
+        }
+        submit.setOnClickListener(this);
+        imageView.setOnClickListener(this);
+        skip.setOnClickListener(view -> {
+
+            Intent intent=new Intent(this,PuzzzleActivity.class);
+            intent.putExtra("level",level);
+            startActivity(intent);
+            finish();
+        });
 
 
+    }
 
+    @Override
+    public void onClick(View view) {
+        for (int i=0;i<button.length;i++)
+        {
+            if(view.getId()==button[i].getId())
+            {
+                temp=txtAns.getText().toString();
+                t=temp+String.valueOf(i);
+                txtAns.setText(""+t);
+            }
+        }
+        if (view.getId()==imageView.getId())
+        {
+            temp=txtAns.getText().toString().substring(0,txtAns.length()-1);
+            txtAns.setText(""+temp);
 
+        }
+        if (view.getId()==submit.getId()) {
+
+            if (txtAns.getText().toString().equals(ans[level])) {
+                Intent intent = new Intent(this, PuzzzleActivity.class);
+                intent.putExtra("level", level);
+                startActivity(intent);
+                finish();
+            }
+        }
     }
 }
