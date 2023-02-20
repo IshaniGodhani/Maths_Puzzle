@@ -15,16 +15,19 @@ public class SelectPuzzle_Activity extends AppCompatActivity {
     String str;
     Puzzle_Adapter puzzle_adapter;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_puzzle);
         recyclerView=findViewById(R.id.recyclerview);
+
         puzzle_adapter=new Puzzle_Adapter(SelectPuzzle_Activity.this);
         GridLayoutManager gridLayoutManager=new GridLayoutManager(this,4);
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(puzzle_adapter);
         imageView=findViewById(R.id.next);
+
         config.count++;
         if (config.count==1) {
             imageView.setVisibility(View.VISIBLE);

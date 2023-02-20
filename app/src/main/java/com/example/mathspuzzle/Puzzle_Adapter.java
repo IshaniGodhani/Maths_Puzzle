@@ -14,7 +14,6 @@ public class Puzzle_Adapter extends RecyclerView.Adapter<Puzzle_Adapter.View_Hol
     Activity activity;
     public Puzzle_Adapter(Activity activity) {
         this.activity=activity;
-
     }
 
     @NonNull
@@ -27,6 +26,15 @@ public class Puzzle_Adapter extends RecyclerView.Adapter<Puzzle_Adapter.View_Hol
 
     @Override
     public void onBindViewHolder(@NonNull Puzzle_Adapter.View_Holder holder, int position) {
+
+        holder.imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                holder.imageView.setVisibility(View.INVISIBLE);
+                holder.textView.setVisibility(View.VISIBLE);
+            }
+        });
 
 
     }
@@ -41,8 +49,8 @@ public class Puzzle_Adapter extends RecyclerView.Adapter<Puzzle_Adapter.View_Hol
         TextView textView;
         public View_Holder(@NonNull View itemView) {
             super(itemView);
-            imageView=itemView.findViewById(R.id.item_img);
-            textView=itemView.findViewById(R.id.text);
+            imageView=itemView.findViewById(R.id.lock);
+            textView=itemView.findViewById(R.id.level);
         }
     }
 }

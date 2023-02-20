@@ -20,7 +20,7 @@ public class PuzzzleActivity extends AppCompatActivity implements View.OnClickLi
     Button[] button=new Button[10];
     Button submit;
     TextView txtAns;
-    String temp,t;
+    String temp,a;
     ImageView imageView,image,skip;
     TextView levelno;
     int level=0;
@@ -39,6 +39,7 @@ public class PuzzzleActivity extends AppCompatActivity implements View.OnClickLi
         if(getIntent().getExtras()!=null)
         {
             level=getIntent().getIntExtra("level",0);
+            System.out.println("Level="+level);
         }
         for(int i=0;i<10;i++)
         {
@@ -56,6 +57,7 @@ public class PuzzzleActivity extends AppCompatActivity implements View.OnClickLi
         imageView.setOnClickListener(this);
         skip.setOnClickListener(view -> {
 
+
             Intent intent=new Intent(this,PuzzzleActivity.class);
             intent.putExtra("level",level);
             startActivity(intent);
@@ -72,8 +74,8 @@ public class PuzzzleActivity extends AppCompatActivity implements View.OnClickLi
             if(view.getId()==button[i].getId())
             {
                 temp=txtAns.getText().toString();
-                t=temp+String.valueOf(i);
-                txtAns.setText(""+t);
+                a=temp+String.valueOf(i);
+                txtAns.setText(""+a);
             }
         }
         if (view.getId()==imageView.getId())
@@ -85,6 +87,7 @@ public class PuzzzleActivity extends AppCompatActivity implements View.OnClickLi
         if (view.getId()==submit.getId()) {
 
             if (txtAns.getText().toString().equals(ans[level])) {
+                level++;
                 Intent intent = new Intent(this, PuzzzleActivity.class);
                 intent.putExtra("level", level);
                 startActivity(intent);
