@@ -13,6 +13,9 @@
         android:theme="@style/Theme.MathsPuzzle"
         tools:targetApi="31">
         <activity
+            android:name=".WinActivity"
+            android:exported="false" />
+        <activity
             android:name=".SelectPuzzle_Activity"
             android:exported="false">
             <meta-data
