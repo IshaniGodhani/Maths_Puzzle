@@ -1,6 +1,9 @@
 package com.example.mathspuzzle;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +15,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class Puzzle_Adapter extends RecyclerView.Adapter<Puzzle_Adapter.View_Holder> {
     Activity activity;
+
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
     public Puzzle_Adapter(Activity activity) {
         this.activity=activity;
+        sharedPreferences= activity.getSharedPreferences("myPref", Context.MODE_PRIVATE);
+        editor=sharedPreferences.edit();
     }
 
     @NonNull
@@ -26,17 +34,48 @@ public class Puzzle_Adapter extends RecyclerView.Adapter<Puzzle_Adapter.View_Hol
 
     @Override
     public void onBindViewHolder(@NonNull Puzzle_Adapter.View_Holder holder, int position) {
+        String status=sharedPreferences.getString("LevelStatus"+position,"pending");
+        int level=sharedPreferences.getInt("LastLevel",0);
 
-        holder.imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                holder.imageView.setVisibility(View.INVISIBLE);
-                holder.textView.setVisibility(View.VISIBLE);
-            }
-        });
-
-
+        if(status.equals("win"))
+        {
+            holder.imageView.setImageResource(R.drawable.tick);
+            holder.textView.setText(""+(holder.getAdapterPosition()+1));
+            holder.textView.setVisibility(View.VISIBLE);
+        }
+        if(status.equals("skip")||position==level+1)
+        {
+            holder.imageView.setImageResource(0);
+            holder.textView.setText(""+(holder.getAdapterPosition()+1));
+            holder.textView.setVisibility(View.VISIBLE);
+        }
+        if(status.equals("win")||status.equals("skip")||position==level+1)
+        {
+            holder.imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent=new Intent(activity,PuzzzleActivity.class);
+                    intent.putExtra("LastLevel",holder.getAdapterPosition());
+                    activity.startActivity(intent);
+                    activity.finish();
+                }
+            });
+        }
+        else
+        {
+           holder.imageView.setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View view) {
+                   holder.imageView.setVisibility(View.INVISIBLE);
+                   holder.textView.setText(""+(holder.getAdapterPosition()+1));
+                   holder.textView.setVisibility(View.VISIBLE);
+                   Intent intent=new Intent(activity,PuzzzleActivity.class);
+                   intent.putExtra("LastLevel",holder.getAdapterPosition());
+                   activity.startActivity(intent);
+                   activity.finish();
+               }
+           });
+        }
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.example.mathspuzzle;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -24,6 +25,9 @@ public class PuzzzleActivity extends AppCompatActivity implements View.OnClickLi
     ImageView imageView,image,skip;
     TextView levelno;
     int level=0;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,10 +39,12 @@ public class PuzzzleActivity extends AppCompatActivity implements View.OnClickLi
         submit=findViewById(R.id.submit);
         skip=findViewById(R.id.skip);
         imageView=findViewById(R.id.erase);
+        sharedPreferences=getSharedPreferences("myPref",MODE_PRIVATE);
+        editor=sharedPreferences.edit();
 
         if(getIntent().getExtras()!=null)
         {
-            level=getIntent().getIntExtra("level",0);
+            level=getIntent().getIntExtra("LastLevel",0);
             System.out.println("Level="+level);
         }
         for(int i=0;i<10;i++)
@@ -56,12 +62,14 @@ public class PuzzzleActivity extends AppCompatActivity implements View.OnClickLi
         submit.setOnClickListener(this);
         imageView.setOnClickListener(this);
         skip.setOnClickListener(view -> {
-
-
-            Intent intent=new Intent(this,PuzzzleActivity.class);
-            intent.putExtra("level",level);
+            editor.putInt("LastLevel",level);//1
+            editor.putString("LevelStatus"+level,"skip");//0
+            editor.commit();
+            level++;
+            Intent intent = new Intent(this, PuzzzleActivity.class);
+            intent.putExtra("LastLevel", level);
             startActivity(intent);
-            finish();
+
         });
 
 
@@ -87,9 +95,12 @@ public class PuzzzleActivity extends AppCompatActivity implements View.OnClickLi
         if (view.getId()==submit.getId()) {
 
             if (txtAns.getText().toString().equals(ans[level])) {
+                editor.putInt("LastLevel",level);//1
+                editor.putString("LevelStatus"+level,"win");//0
+                editor.commit();
                 level++;
-                Intent intent = new Intent(this, PuzzzleActivity.class);
-                intent.putExtra("level", level);
+                Intent intent = new Intent(this, WinActivity.class);
+                intent.putExtra("LastLevel", level);
                 startActivity(intent);
                 finish();
             }

@@ -28,7 +28,6 @@ public class SelectPuzzle_Activity extends AppCompatActivity {
         recyclerView.setAdapter(puzzle_adapter);
         imageView=findViewById(R.id.next);
 
-        config.count++;
         if (config.count==1) {
             imageView.setVisibility(View.VISIBLE);
             imageView.setOnClickListener(new View.OnClickListener() {
