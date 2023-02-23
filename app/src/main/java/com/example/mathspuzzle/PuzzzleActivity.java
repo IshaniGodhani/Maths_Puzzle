@@ -1,7 +1,9 @@
 package com.example.mathspuzzle;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class PuzzzleActivity extends AppCompatActivity implements View.OnClickListener {
     int[] img={R.drawable.p1,R.drawable.p2,R.drawable.p3,R.drawable.p4,R.drawable.p5,
@@ -103,6 +106,25 @@ public class PuzzzleActivity extends AppCompatActivity implements View.OnClickLi
                 intent.putExtra("LastLevel", level);
                 startActivity(intent);
                 finish();
+            }
+            else {
+                //Toast.makeText(this, "Wrong Answer", Toast.LENGTH_SHORT).show();
+                AlertDialog.Builder builder=new AlertDialog.Builder(this);
+                builder.setTitle("Alert..!");
+                builder.setMessage("Answer is Wrong..  Level failed.. want to try again??");
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        finish();
+                    }
+                });
+                builder.show();
             }
         }
     }

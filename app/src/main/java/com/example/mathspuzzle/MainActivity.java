@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
         puzzles=findViewById(R.id.puzzles);
         buypro=findViewById(R.id.buy);
         sharedPreferences=getSharedPreferences("myPref",MODE_PRIVATE);
-        level=sharedPreferences.getInt("LastLevel",0);
+        level=sharedPreferences.getInt("LastLevel",-1);
         Continue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

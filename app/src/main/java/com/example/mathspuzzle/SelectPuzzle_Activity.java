@@ -27,7 +27,7 @@ public class SelectPuzzle_Activity extends AppCompatActivity {
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(puzzle_adapter);
         imageView=findViewById(R.id.next);
-
+        config.count++;
         if (config.count==1) {
             imageView.setVisibility(View.VISIBLE);
             imageView.setOnClickListener(new View.OnClickListener() {
@@ -35,18 +35,12 @@ public class SelectPuzzle_Activity extends AppCompatActivity {
                 public void onClick(View view) {
                     Intent intent = new Intent(SelectPuzzle_Activity.this, SelectPuzzle_Activity.class);
                     intent.putExtra("lable", "page1");
+                    intent.putExtra("label","page2");
                     startActivity(intent);
                     finish();
                 }
             });
-            str = getIntent().getStringExtra("lable");
-            if (getIntent().getExtras() != null) {
-                recyclerView.setAdapter(puzzle_adapter);
-            }
-        }
-        else
-        {
-            imageView.setVisibility(View.INVISIBLE);
+
         }
 
     }

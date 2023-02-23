@@ -34,53 +34,76 @@ public class Puzzle_Adapter extends RecyclerView.Adapter<Puzzle_Adapter.View_Hol
 
     @Override
     public void onBindViewHolder(@NonNull Puzzle_Adapter.View_Holder holder, int position) {
-        String status=sharedPreferences.getString("LevelStatus"+position,"pending");
-        int level=sharedPreferences.getInt("LastLevel",0);
 
-        if(status.equals("win"))
+         String str = activity.getIntent().getStringExtra("lable");
+        if (str.equals("page1"))
         {
-            holder.imageView.setImageResource(R.drawable.tick);
-            holder.textView.setText(""+(holder.getAdapterPosition()+1));
-            holder.textView.setVisibility(View.VISIBLE);
+            String status=sharedPreferences.getString("LevelStatus"+position,"pending");
+            int level=sharedPreferences.getInt("LastLevel",-1);
+            if(status.equals("win"))
+            {
+                holder.imageView.setImageResource(R.drawable.tick);
+                holder.textView.setText(""+(holder.getAdapterPosition()+1));
+                holder.textView.setVisibility(View.VISIBLE);
+            }
+            if(status.equals("skip")||position==level+1)
+            {
+                holder.imageView.setImageResource(0);
+                holder.textView.setText(""+(holder.getAdapterPosition()+1));
+                holder.textView.setVisibility(View.VISIBLE);
+            }
+            if(status.equals("win")||status.equals("skip")||position==level+1)
+            {
+                holder.imageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent=new Intent(activity,PuzzzleActivity.class);
+                        intent.putExtra("LastLevel",holder.getAdapterPosition());
+                        activity.startActivity(intent);
+                        activity.finish();
+                    }
+                });
+            }
+
         }
-        if(status.equals("skip")||position==level+1)
+        else  if (str.equals("page2"))
         {
-            holder.imageView.setImageResource(0);
-            holder.textView.setText(""+(holder.getAdapterPosition()+1));
-            holder.textView.setVisibility(View.VISIBLE);
+            String status=sharedPreferences.getString("LevelStatus"+position,"pending");
+            int level=sharedPreferences.getInt("LastLevel",-1);
+            if(status.equals("win"))
+            {
+                holder.imageView.setImageResource(R.drawable.tick);
+                holder.textView.setText(""+(holder.getAdapterPosition()+23));
+                holder.textView.setVisibility(View.VISIBLE);
+            }
+            if(status.equals("skip")||position==level+1)
+            {
+                holder.imageView.setImageResource(0);
+                holder.textView.setText(""+(holder.getAdapterPosition()+23));
+                holder.textView.setVisibility(View.VISIBLE);
+            }
+            if(status.equals("win")||status.equals("skip")||position==level+1)
+            {
+                holder.imageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent=new Intent(activity,PuzzzleActivity.class);
+                        intent.putExtra("LastLevel",holder.getAdapterPosition());
+                        activity.startActivity(intent);
+                        activity.finish();
+                    }
+                });
+            }
+
         }
-        if(status.equals("win")||status.equals("skip")||position==level+1)
-        {
-            holder.imageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent=new Intent(activity,PuzzzleActivity.class);
-                    intent.putExtra("LastLevel",holder.getAdapterPosition());
-                    activity.startActivity(intent);
-                    activity.finish();
-                }
-            });
-        }
-        else
-        {
-           holder.imageView.setOnClickListener(new View.OnClickListener() {
-               @Override
-               public void onClick(View view) {
-                   holder.imageView.setVisibility(View.INVISIBLE);
-                   holder.textView.setText(""+(holder.getAdapterPosition()+1));
-                   holder.textView.setVisibility(View.VISIBLE);
-                   Intent intent=new Intent(activity,PuzzzleActivity.class);
-                   intent.putExtra("LastLevel",holder.getAdapterPosition());
-                   activity.startActivity(intent);
-                   activity.finish();
-               }
-           });
-        }
+
+
+
     }
 
     @Override
     public int getItemCount() {
-        return 24;
+        return 23;
     }
 
     public class View_Holder extends RecyclerView.ViewHolder {
