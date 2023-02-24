@@ -20,7 +20,7 @@ public class PuzzzleActivity extends AppCompatActivity implements View.OnClickLi
             R.drawable.p16,R.drawable.p17,R.drawable.p18,R.drawable.p19,R.drawable.p20,
             R.drawable.p21,R.drawable.p22,R.drawable.p23,R.drawable.p24,R.drawable.p25,
             R.drawable.p26,R.drawable.p27,R.drawable.p28,R.drawable.p29,R.drawable.p30};
-    String[] ans={"10","20","30","40","50","60","70","10","20","30","40","50","60","70"};
+    String[] ans={"10","25","6","14","128","7","50","1025","100","3","212","3011","10","16"};
     Button[] button=new Button[10];
     Button submit;
     TextView txtAns;

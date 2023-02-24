@@ -11,8 +11,8 @@ import android.widget.ImageView;
 
 public class SelectPuzzle_Activity extends AppCompatActivity {
     RecyclerView recyclerView;
-    ImageView imageView;
-    String str;
+    ImageView next,previous;
+    String str,page="page1";
     Puzzle_Adapter puzzle_adapter;
 
 
@@ -21,25 +21,48 @@ public class SelectPuzzle_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_puzzle);
         recyclerView=findViewById(R.id.recyclerview);
+        if(getIntent().getExtras()!=null)
+        {
+            page = getIntent().getStringExtra("lable");
+            System.out.println("lable"+str);
+        }
 
-        puzzle_adapter=new Puzzle_Adapter(SelectPuzzle_Activity.this);
+        puzzle_adapter=new Puzzle_Adapter(SelectPuzzle_Activity.this,page);
         GridLayoutManager gridLayoutManager=new GridLayoutManager(this,4);
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(puzzle_adapter);
-        imageView=findViewById(R.id.next);
+        next=findViewById(R.id.next);
+        previous=findViewById(R.id.previous);
         config.count++;
-        if (config.count==1) {
-            imageView.setVisibility(View.VISIBLE);
-            imageView.setOnClickListener(new View.OnClickListener() {
+
+        if (config.count==2) {
+            next.setVisibility(View.VISIBLE);
+            next.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(SelectPuzzle_Activity.this, SelectPuzzle_Activity.class);
-                    intent.putExtra("lable", "page1");
-                    intent.putExtra("label","page2");
+//                  intent.putExtra("lable", "page1");
+                    intent.putExtra("lable","page2");
+                    startActivity(intent);
+                    finish();
+
+                }
+            });
+
+
+        }
+        if (config.count==3) {
+            next.setVisibility(View.GONE);
+            previous.setVisibility(View.VISIBLE);
+            previous.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(SelectPuzzle_Activity.this, SelectPuzzle_Activity.class);
                     startActivity(intent);
                     finish();
                 }
             });
+
 
         }
 

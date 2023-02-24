@@ -15,11 +15,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class Puzzle_Adapter extends RecyclerView.Adapter<Puzzle_Adapter.View_Holder> {
     Activity activity;
-
+    String page;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
-    public Puzzle_Adapter(Activity activity) {
+    public Puzzle_Adapter(Activity activity, String page) {
         this.activity=activity;
+        this.page=page;
         sharedPreferences= activity.getSharedPreferences("myPref", Context.MODE_PRIVATE);
         editor=sharedPreferences.edit();
     }
@@ -35,8 +36,8 @@ public class Puzzle_Adapter extends RecyclerView.Adapter<Puzzle_Adapter.View_Hol
     @Override
     public void onBindViewHolder(@NonNull Puzzle_Adapter.View_Holder holder, int position) {
 
-         String str = activity.getIntent().getStringExtra("lable");
-        if (str.equals("page1"))
+
+        if (page.equals("page1"))
         {
             String status=sharedPreferences.getString("LevelStatus"+position,"pending");
             int level=sharedPreferences.getInt("LastLevel",-1);
@@ -66,23 +67,23 @@ public class Puzzle_Adapter extends RecyclerView.Adapter<Puzzle_Adapter.View_Hol
             }
 
         }
-        else  if (str.equals("page2"))
+        else  if (page.equals("page2"))
         {
-            String status=sharedPreferences.getString("LevelStatus"+position,"pending");
+            String status=sharedPreferences.getString("LevelStatus"+position+24,"pending");
             int level=sharedPreferences.getInt("LastLevel",-1);
             if(status.equals("win"))
             {
                 holder.imageView.setImageResource(R.drawable.tick);
-                holder.textView.setText(""+(holder.getAdapterPosition()+23));
+                holder.textView.setText(""+(holder.getAdapterPosition()+24));
                 holder.textView.setVisibility(View.VISIBLE);
             }
-            if(status.equals("skip")||position==level+1)
+            if(status.equals("skip")||position==level+24)
             {
                 holder.imageView.setImageResource(0);
-                holder.textView.setText(""+(holder.getAdapterPosition()+23));
+                holder.textView.setText(""+(holder.getAdapterPosition()+24));
                 holder.textView.setVisibility(View.VISIBLE);
             }
-            if(status.equals("win")||status.equals("skip")||position==level+1)
+            if(status.equals("win")||status.equals("skip")||position==level+24)
             {
                 holder.imageView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -103,7 +104,7 @@ public class Puzzle_Adapter extends RecyclerView.Adapter<Puzzle_Adapter.View_Hol
 
     @Override
     public int getItemCount() {
-        return 23;
+        return 24;
     }
 
     public class View_Holder extends RecyclerView.ViewHolder {
