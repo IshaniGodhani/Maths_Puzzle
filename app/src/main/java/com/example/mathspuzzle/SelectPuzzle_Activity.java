@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -14,6 +15,10 @@ public class SelectPuzzle_Activity extends AppCompatActivity {
     ImageView next,previous;
     String str,page="page1";
     Puzzle_Adapter puzzle_adapter;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
+    int count=1;
+
 
 
     @Override
@@ -21,6 +26,10 @@ public class SelectPuzzle_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_puzzle);
         recyclerView=findViewById(R.id.recyclerview);
+        sharedPreferences=getSharedPreferences("myPref",MODE_PRIVATE);
+        editor=sharedPreferences.edit();
+
+
         if(getIntent().getExtras()!=null)
         {
             page = getIntent().getStringExtra("lable");
@@ -33,9 +42,11 @@ public class SelectPuzzle_Activity extends AppCompatActivity {
         recyclerView.setAdapter(puzzle_adapter);
         next=findViewById(R.id.next);
         previous=findViewById(R.id.previous);
-        config.count++;
+        editor.putInt("count",1);
+        editor.commit();
+        count++;
 
-        if (config.count==2) {
+        if (count==2) {
             next.setVisibility(View.VISIBLE);
             next.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -51,7 +62,7 @@ public class SelectPuzzle_Activity extends AppCompatActivity {
 
 
         }
-        if (config.count==3) {
+        if (count==3) {
             next.setVisibility(View.GONE);
             previous.setVisibility(View.VISIBLE);
             previous.setOnClickListener(new View.OnClickListener() {
