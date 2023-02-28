@@ -17,17 +17,14 @@ public class SelectPuzzle_Activity extends AppCompatActivity {
     Puzzle_Adapter puzzle_adapter;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
-    int count=1;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_puzzle);
         recyclerView=findViewById(R.id.recyclerview);
-        sharedPreferences=getSharedPreferences("myPref",MODE_PRIVATE);
-        editor=sharedPreferences.edit();
+//        sharedPreferences=getSharedPreferences("myPref",MODE_PRIVATE);
+//        editor=sharedPreferences.edit();
 
 
         if(getIntent().getExtras()!=null)
@@ -42,18 +39,40 @@ public class SelectPuzzle_Activity extends AppCompatActivity {
         recyclerView.setAdapter(puzzle_adapter);
         next=findViewById(R.id.next);
         previous=findViewById(R.id.previous);
-        editor.putInt("count",1);
-        editor.commit();
-        count++;
+//        editor.putInt("count",1);
+//        editor.commit();
+        config.count++;
 
-        if (count==2) {
+        if (config.count==1 ) {
             next.setVisibility(View.VISIBLE);
             next.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(SelectPuzzle_Activity.this, SelectPuzzle_Activity.class);
-//                  intent.putExtra("lable", "page1");
                     intent.putExtra("lable","page2");
+                    startActivity(intent);
+                    finish();
+                }
+            });
+
+
+        }
+        if (config.count==2) {
+            next.setVisibility(View.VISIBLE);
+            previous.setVisibility(View.VISIBLE);
+            next.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(SelectPuzzle_Activity.this, SelectPuzzle_Activity.class);
+                    intent.putExtra("lable","page3");
+                    startActivity(intent);
+                    finish();
+                }
+            });
+            previous.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(SelectPuzzle_Activity.this, SelectPuzzle_Activity.class);
                     startActivity(intent);
                     finish();
 
@@ -62,7 +81,7 @@ public class SelectPuzzle_Activity extends AppCompatActivity {
 
 
         }
-        if (count==3) {
+        if (config.count==3) {
             next.setVisibility(View.GONE);
             previous.setVisibility(View.VISIBLE);
             previous.setOnClickListener(new View.OnClickListener() {

@@ -69,27 +69,27 @@ public class Puzzle_Adapter extends RecyclerView.Adapter<Puzzle_Adapter.View_Hol
         }
         else  if (page.equals("page2"))
         {
-            String status=sharedPreferences.getString("LevelStatus"+position+24,"pending");
-            int level=sharedPreferences.getInt("LastLevel",-1);
+            String status=sharedPreferences.getString("LevelStatus"+(position+25),"pending");
+            int level=sharedPreferences.getInt("LastLevel",23);
             if(status.equals("win"))
             {
                 holder.imageView.setImageResource(R.drawable.tick);
-                holder.textView.setText(""+(holder.getAdapterPosition()+24));
+                holder.textView.setText(""+(holder.getAdapterPosition()+25));
                 holder.textView.setVisibility(View.VISIBLE);
             }
-            if(status.equals("skip")||position==level+24)
+            if(status.equals("skip")||position==level+25)
             {
                 holder.imageView.setImageResource(0);
-                holder.textView.setText(""+(holder.getAdapterPosition()+24));
+                holder.textView.setText(""+(holder.getAdapterPosition()+25));
                 holder.textView.setVisibility(View.VISIBLE);
             }
-            if(status.equals("win")||status.equals("skip")||position==level+24)
+            if(status.equals("win")||status.equals("skip")||position==level+25)
             {
                 holder.imageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         Intent intent=new Intent(activity,PuzzzleActivity.class);
-                        intent.putExtra("LastLevel",holder.getAdapterPosition());
+                        intent.putExtra("LastLevel",holder.getAdapterPosition()+24);
                         activity.startActivity(intent);
                         activity.finish();
                     }
