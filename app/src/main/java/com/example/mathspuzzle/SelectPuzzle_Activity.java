@@ -15,16 +15,13 @@ public class SelectPuzzle_Activity extends AppCompatActivity {
     ImageView next,previous;
     String str,page="page1";
     Puzzle_Adapter puzzle_adapter;
-    SharedPreferences sharedPreferences;
-    SharedPreferences.Editor editor;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_puzzle);
         recyclerView=findViewById(R.id.recyclerview);
-//        sharedPreferences=getSharedPreferences("myPref",MODE_PRIVATE);
-//        editor=sharedPreferences.edit();
 
 
         if(getIntent().getExtras()!=null)
@@ -39,8 +36,10 @@ public class SelectPuzzle_Activity extends AppCompatActivity {
         recyclerView.setAdapter(puzzle_adapter);
         next=findViewById(R.id.next);
         previous=findViewById(R.id.previous);
-//        editor.putInt("count",1);
-//        editor.commit();
+        if(config.count==3)
+        {
+            config.count=0;
+        }
         config.count++;
 
         if (config.count==1 ) {
@@ -51,6 +50,7 @@ public class SelectPuzzle_Activity extends AppCompatActivity {
                     Intent intent = new Intent(SelectPuzzle_Activity.this, SelectPuzzle_Activity.class);
                     intent.putExtra("lable","page2");
                     startActivity(intent);
+                   // config.count++;
                     finish();
                 }
             });
@@ -66,6 +66,7 @@ public class SelectPuzzle_Activity extends AppCompatActivity {
                     Intent intent = new Intent(SelectPuzzle_Activity.this, SelectPuzzle_Activity.class);
                     intent.putExtra("lable","page3");
                     startActivity(intent);
+                    //config.count++;
                     finish();
                 }
             });
@@ -89,12 +90,10 @@ public class SelectPuzzle_Activity extends AppCompatActivity {
                 public void onClick(View view) {
                     Intent intent = new Intent(SelectPuzzle_Activity.this, SelectPuzzle_Activity.class);
                     startActivity(intent);
+                    //config.count++;
                     finish();
                 }
             });
-
-
         }
-
     }
 }

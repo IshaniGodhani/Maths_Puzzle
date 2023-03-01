@@ -97,6 +97,36 @@ public class Puzzle_Adapter extends RecyclerView.Adapter<Puzzle_Adapter.View_Hol
             }
 
         }
+        else  if (page.equals("page3"))
+        {
+            String status=sharedPreferences.getString("LevelStatus"+(position+49),"pending");
+            int level=sharedPreferences.getInt("LastLevel",47);
+            if(status.equals("win"))
+            {
+                holder.imageView.setImageResource(R.drawable.tick);
+                holder.textView.setText(""+(holder.getAdapterPosition()+49));
+                holder.textView.setVisibility(View.VISIBLE);
+            }
+            if(status.equals("skip")||position==level+49)
+            {
+                holder.imageView.setImageResource(0);
+                holder.textView.setText(""+(holder.getAdapterPosition()+49));
+                holder.textView.setVisibility(View.VISIBLE);
+            }
+            if(status.equals("win")||status.equals("skip")||position==level+49)
+            {
+                holder.imageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent=new Intent(activity,PuzzzleActivity.class);
+                        intent.putExtra("LastLevel",holder.getAdapterPosition()+48);
+                        activity.startActivity(intent);
+                        activity.finish();
+                    }
+                });
+            }
+
+        }
 
 
 
